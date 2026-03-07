@@ -19,6 +19,7 @@ import revxrsal.commands.annotation.Optional;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
+import revxrsal.commands.exception.CommandErrorException;
 
 @SuppressWarnings("unused")
 @Command("tp")
@@ -51,6 +52,10 @@ public class TPCommand {
     @CommandPermission(value = "tp.to")
     public void to(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
+        if (player == target) {
+            throw new CommandErrorException("You cannot teleport to yourself");
+        }
+
         player.teleport(target);
 
         player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("teleported-to")
@@ -61,6 +66,10 @@ public class TPCommand {
     @CommandPermission(value = "tp.summon")
     public void summon(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
+        if (player == target) {
+            throw new CommandErrorException("You cannot teleport to yourself");
+        }
+
         target.teleport(player);
 
         player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("summoned-player")
@@ -71,6 +80,10 @@ public class TPCommand {
     @CommandPermission(value = "tp.request", defaultAccess = PermissionDefault.TRUE)
     public void request(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
+        if (player == target) {
+            throw new CommandErrorException("You cannot teleport to yourself");
+        }
+
         TPUser targetUser = RegrowthTP.getInstance().getUserCache().getCachedUser(target.getUniqueId());
         if (targetUser != null && !targetUser.areRequestsEnabled()) {
             player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("requests-disabled")
@@ -94,6 +107,10 @@ public class TPCommand {
     @CommandPermission(value = "tp.invite", defaultAccess = PermissionDefault.TRUE)
     public void invite(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
+        if (player == target) {
+            throw new CommandErrorException("You cannot teleport to yourself");
+        }
+
         TPUser targetUser = RegrowthTP.getInstance().getUserCache().getCachedUser(target.getUniqueId());
         if (targetUser != null && !targetUser.areRequestsEnabled()) {
             player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("requests-disabled")
