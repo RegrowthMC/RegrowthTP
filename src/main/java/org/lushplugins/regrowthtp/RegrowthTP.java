@@ -31,8 +31,7 @@ public final class RegrowthTP extends SpigotPlugin {
 
         this.userCache = new UserCache(this);
         this.storageHandler = StorageHandler.builder(this).build();
-        this.storageHandler.reload();
-        RegrowthTP.getInstance().getStorageHandler().execute(context -> context
+        this.storageHandler.execute(context -> context
             .createTableIfNotExists("regrowthtp_users")
             .column("uuid", SQLDataType.UUID.notNull())
             .column("requests_enabled", SQLDataType.BOOLEAN)
