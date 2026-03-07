@@ -189,6 +189,8 @@ public class TPCommand {
         requestManager.removeRequest(request);
         player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("denied-request")
             .replace("%player%", target.getName())));
+        target.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("request-denied")
+            .replace("%player%", player.getName())));
     }
 
     @Command("tp toggle")
