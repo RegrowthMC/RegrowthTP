@@ -19,7 +19,8 @@ import revxrsal.commands.annotation.Optional;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
-import revxrsal.commands.exception.CommandErrorException;
+
+import java.util.UUID;
 
 @SuppressWarnings("unused")
 @Command("tp")
@@ -27,7 +28,7 @@ public class TPCommand {
 
     // TODO: Support ignoring commas in location for easier coordinate copy-pasting
     @Command({"tp location", "tploc"})
-    @CommandPermission(value = "tp.location")
+    @CommandPermission("tp.location")
     public void location(
         BukkitCommandActor actor,
         Location location,
@@ -49,11 +50,12 @@ public class TPCommand {
     }
 
     @Command("tp to")
-    @CommandPermission(value = "tp.to")
+    @CommandPermission("tp.to")
     public void to(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
         if (player == target) {
-            throw new CommandErrorException("You cannot teleport to yourself");
+            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("self-request")));
+            return;
         }
 
         player.teleport(target);
@@ -63,11 +65,12 @@ public class TPCommand {
     }
 
     @Command("tp summon")
-    @CommandPermission(value = "tp.summon")
+    @CommandPermission("tp.summon")
     public void summon(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
         if (player == target) {
-            throw new CommandErrorException("You cannot teleport to yourself");
+            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("self-request")));
+            return;
         }
 
         target.teleport(player);
@@ -81,7 +84,8 @@ public class TPCommand {
     public void request(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
         if (player == target) {
-            throw new CommandErrorException("You cannot teleport to yourself");
+            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("self-request")));
+            return;
         }
 
         TPUser targetUser = RegrowthTP.getInstance().getUserCache().getCachedUser(target.getUniqueId());
@@ -91,11 +95,16 @@ public class TPCommand {
             return;
         }
 
-        RegrowthTP.getInstance().getRequestManager().sendRequest(new TeleportRequest(
-            player.getUniqueId(),
-            target.getUniqueId(),
-            TeleportDirection.TO
-        ));
+        UUID from = player.getUniqueId();
+        UUID to = target.getUniqueId();
+        TeleportRequest request = RegrowthTP.getInstance().getRequestManager().findRequest(from, to);
+        if (request != null) {
+            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("already-requested")
+                .replace("%player%", target.getName())));
+            return;
+        }
+
+        RegrowthTP.getInstance().getRequestManager().sendRequest(new TeleportRequest(from, to, TeleportDirection.TO));
 
         target.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("received-teleport-request")
             .replace("%player%", player.getName())));
@@ -108,7 +117,8 @@ public class TPCommand {
     public void invite(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
         if (player == target) {
-            throw new CommandErrorException("You cannot teleport to yourself");
+            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("self-request")));
+            return;
         }
 
         TPUser targetUser = RegrowthTP.getInstance().getUserCache().getCachedUser(target.getUniqueId());
@@ -118,11 +128,16 @@ public class TPCommand {
             return;
         }
 
-        RegrowthTP.getInstance().getRequestManager().sendRequest(new TeleportRequest(
-            player.getUniqueId(),
-            target.getUniqueId(),
-            TeleportDirection.SUMMON
-        ));
+        UUID from = player.getUniqueId();
+        UUID to = target.getUniqueId();
+        TeleportRequest request = RegrowthTP.getInstance().getRequestManager().findRequest(from, to);
+        if (request != null) {
+            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("already-requested")
+                .replace("%player%", target.getName())));
+            return;
+        }
+
+        RegrowthTP.getInstance().getRequestManager().sendRequest(new TeleportRequest(from, to, TeleportDirection.SUMMON));
 
         target.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("received-summon-request")
             .replace("%player%", player.getName())));

@@ -8,6 +8,8 @@ messages:
   received-summon-request: "<#e0c01b>%player%</#e0c01b> <#ffda54>has requested for you to teleport to them"
   denied-request: "<#ff6969>Denied teleport request from <#d13636>%player%"
   request-denied: "<#d13636>%player%</#d13636> <#ff6969>rejected your teleport request"
+  self-request: "<#ff6969>You cannot teleport to yourself"
+  already-requested: "<#ff6969>You have already request to teleport to <#d13636>%player%"
   no-request: "<#ff6969>You don't have a teleport request from <#d13636>%player%"
   no-requests: "<#ff6969>You don't have any teleport requests"
   toggle-requests: "<#b7faa2>Teleport requests have been <#66b04f>%status%"
