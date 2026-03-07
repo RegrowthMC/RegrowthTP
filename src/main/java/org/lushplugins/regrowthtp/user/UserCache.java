@@ -16,7 +16,7 @@ public class UserCache extends org.lushplugins.lushlib.cache.UserCache<TPUser> {
 
     @Override
     protected CompletableFuture<TPUser> load(UUID uuid) {
-        return RegrowthTP.getInstance().getStorageManager().query((context) -> {
+        return RegrowthTP.getInstance().getStorageHandler().query((context) -> {
              Record result = context.select()
                 .from(DSL.table("regrowthtp_users"))
                 .where(DSL.field("uuid").eq(uuid))

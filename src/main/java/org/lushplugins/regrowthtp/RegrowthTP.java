@@ -1,12 +1,13 @@
 package org.lushplugins.regrowthtp;
 
+import org.jooq.impl.SQLDataType;
 import org.lushplugins.lushlib.plugin.SpigotPlugin;
 import org.lushplugins.regrowthtp.command.TPCommand;
 import org.lushplugins.regrowthtp.config.ConfigManager;
 import org.lushplugins.regrowthtp.listener.PlayerListener;
 import org.lushplugins.regrowthtp.request.RequestManager;
-import org.lushplugins.regrowthtp.storage.StorageManager;
 import org.lushplugins.regrowthtp.user.UserCache;
+import org.lushplugins.storagehandler.StorageHandler;
 import revxrsal.commands.bukkit.BukkitLamp;
 
 public final class RegrowthTP extends SpigotPlugin {
@@ -15,7 +16,7 @@ public final class RegrowthTP extends SpigotPlugin {
     private ConfigManager configManager;
     private RequestManager requestManager;
     private UserCache userCache;
-    private StorageManager storageManager;
+    private StorageHandler storageHandler;
 
     @Override
     public void onLoad() {
@@ -27,9 +28,17 @@ public final class RegrowthTP extends SpigotPlugin {
         this.configManager = new ConfigManager();
         this.configManager.reload();
         this.requestManager = new RequestManager();
+
         this.userCache = new UserCache(this);
-        this.storageManager = new StorageManager();
-        this.storageManager.reload();
+        this.storageHandler = StorageHandler.builder(this).build();
+        this.storageHandler.reload();
+        RegrowthTP.getInstance().getStorageHandler().execute(context -> context
+            .createTableIfNotExists("regrowthtp_users")
+            .column("uuid", SQLDataType.UUID.notNull())
+            .column("requests_enabled", SQLDataType.BOOLEAN)
+            .primaryKey("uuid")
+            .execute()
+        );
 
         registerListener(new PlayerListener());
 
@@ -40,8 +49,8 @@ public final class RegrowthTP extends SpigotPlugin {
 
     @Override
     public void onDisable() {
-        if (storageManager != null) {
-            storageManager.shutdown();
+        if (storageHandler != null) {
+            storageHandler.shutdown();
         }
     }
 
@@ -57,8 +66,8 @@ public final class RegrowthTP extends SpigotPlugin {
         return userCache;
     }
 
-    public StorageManager getStorageManager() {
-        return storageManager;
+    public StorageHandler getStorageHandler() {
+        return storageHandler;
     }
 
     public static RegrowthTP getInstance() {

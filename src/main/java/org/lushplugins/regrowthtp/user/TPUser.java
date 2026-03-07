@@ -35,7 +35,7 @@ public class TPUser {
     }
 
     public void save() {
-        RegrowthTP.getInstance().getStorageManager().execute(context -> context
+        RegrowthTP.getInstance().getStorageHandler().execute(context -> context
             .insertInto(DSL.table("regrowthtp_users"))
             .set(DSL.field("uuid"), uuid)
             .set(DSL.field("requests_enabled"), requestsEnabled)

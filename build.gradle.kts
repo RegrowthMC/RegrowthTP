@@ -18,13 +18,10 @@ repositories {
 dependencies {
     // Dependencies
     compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")
-    compileOnly("com.mysql:mysql-connector-j:8.3.0")
-    compileOnly("org.xerial:sqlite-jdbc:3.46.0.0")
 
     // Libraries
     implementation("org.lushplugins:LushLib:0.10.89")
-    implementation("com.zaxxer:HikariCP:7.0.2")
-    implementation("org.jooq:jooq:3.20.11")
+    implementation("org.lushplugins:StorageHandler:0.0.2")
     implementation("io.github.revxrsal:lamp.common:4.0.0-rc.14")
     implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.14")
 }
