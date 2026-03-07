@@ -79,7 +79,7 @@ public class TPCommand {
             .replace("%player%", target.getName())));
     }
 
-    @Command({"tp request", "tpr"})
+    @Command({"tp request", "tpr", "tpa"})
     @CommandPermission(value = "tp.request", defaultAccess = PermissionDefault.TRUE)
     public void request(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
