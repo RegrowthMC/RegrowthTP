@@ -1,1 +1,1 @@
-rootProject.name = "RegrowthTp"
+rootProject.name = "RegrowthTP"

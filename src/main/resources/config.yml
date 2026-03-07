@@ -1,0 +1,13 @@
+request-expiry-time: 30
+
+messages:
+  teleported-to: "Teleported to %target%"
+  summoned-player: "%player% has been teleported to you"
+  sent-request: "Sent teleport request to %player%"
+  received-teleport-request: "%player% has requested to teleport to you"
+  received-summon-request: "%player% has requested for you to teleport to them"
+  denied-request: "Denied %player%'s request"
+  no-request: "You don't have a teleport request from %player%"
+  no-requests: "You don't have any teleport requests"
+  toggle-requests: "Teleport requests have been %status%"
+  requests-disabled: "%player% is not currently accepting teleport requests"

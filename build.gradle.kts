@@ -12,15 +12,21 @@ repositories {
     mavenCentral()
     maven("https://oss.sonatype.org/content/groups/public/")
     maven("https://repo.papermc.io/repository/maven-public/") // Paper
+    maven("https://repo.lushplugins.org/snapshots/") // LushLib
 }
 
 dependencies {
     // Dependencies
     compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")
-
-    // Soft Dependencies
+    compileOnly("com.mysql:mysql-connector-j:8.3.0")
+    compileOnly("org.xerial:sqlite-jdbc:3.46.0.0")
 
     // Libraries
+    implementation("org.lushplugins:LushLib:0.10.89")
+    implementation("com.zaxxer:HikariCP:7.0.2")
+    implementation("org.jooq:jooq:3.20.11")
+    implementation("io.github.revxrsal:lamp.common:4.0.0-rc.14")
+    implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.14")
 }
 
 java {

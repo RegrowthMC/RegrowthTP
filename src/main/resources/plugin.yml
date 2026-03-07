@@ -1,5 +1,5 @@
-name: RegrowthTp
+name: RegrowthTP
 version: ${project.version}
-main: org.lushplugins.regrowthtp.RegrowthTp
+main: org.lushplugins.regrowthtp.RegrowthTP
 api-version: '1.21'
-github-repo: RegrowthMC/RegrowthTp
+github-repo: RegrowthMC/RegrowthTP
