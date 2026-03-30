@@ -8,7 +8,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
-import org.lushplugins.chatcolorhandler.paper.PaperColor;
+import org.lushplugins.lushlib.libraries.chatcolor.paper.PaperColor;
 import org.lushplugins.regrowthtp.RegrowthTP;
 import org.lushplugins.regrowthtp.request.RequestManager;
 import org.lushplugins.regrowthtp.request.TeleportDirection;
