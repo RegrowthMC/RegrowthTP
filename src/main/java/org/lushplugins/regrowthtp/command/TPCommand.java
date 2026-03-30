@@ -8,7 +8,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
-import org.lushplugins.lushlib.libraries.chatcolor.ModernChatColorHandler;
+import org.lushplugins.lushlib.libraries.chatcolor.paper.PaperColor;
 import org.lushplugins.regrowthtp.RegrowthTP;
 import org.lushplugins.regrowthtp.request.RequestManager;
 import org.lushplugins.regrowthtp.request.TeleportDirection;
@@ -45,8 +45,8 @@ public class TPCommand {
 
         target.teleportAsync(location);
 
-        target.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("teleported-to")
-            .replace("%target%", "%s, %s, %s".formatted(location.getX(), location.getY(), location.getZ()))));
+        PaperColor.handler().sendMessage(target, RegrowthTP.getInstance().getConfigManager().getMessage("teleported-to")
+            .replace("%target%", "%s, %s, %s".formatted(location.getX(), location.getY(), location.getZ())));
     }
 
     @Command("tp to")
@@ -54,14 +54,14 @@ public class TPCommand {
     public void to(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
         if (player == target) {
-            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("self-request")));
+            PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("self-request"));
             return;
         }
 
         player.teleport(target);
 
-        player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("teleported-to")
-            .replace("%target%", target.getName())));
+        PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("teleported-to")
+            .replace("%target%", target.getName()));
     }
 
     @Command("tp summon")
@@ -69,14 +69,14 @@ public class TPCommand {
     public void summon(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
         if (player == target) {
-            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("self-request")));
+            PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("self-request"));
             return;
         }
 
         target.teleport(player);
 
-        player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("summoned-player")
-            .replace("%player%", target.getName())));
+        PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("summoned-player")
+            .replace("%player%", target.getName()));
     }
 
     @Command({"tp request", "tpr", "tpa"})
@@ -84,14 +84,14 @@ public class TPCommand {
     public void request(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
         if (player == target) {
-            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("self-request")));
+            PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("self-request"));
             return;
         }
 
         TPUser targetUser = RegrowthTP.getInstance().getUserCache().getCachedUser(target.getUniqueId());
         if (targetUser != null && !targetUser.areRequestsEnabled()) {
-            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("requests-disabled")
-                .replace("%player%", target.getName())));
+            PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("requests-disabled")
+                .replace("%player%", target.getName()));
             return;
         }
 
@@ -99,17 +99,17 @@ public class TPCommand {
         UUID to = target.getUniqueId();
         TeleportRequest request = RegrowthTP.getInstance().getRequestManager().findRequest(from, to);
         if (request != null) {
-            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("already-requested")
-                .replace("%player%", target.getName())));
+            PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("already-requested")
+                .replace("%player%", target.getName()));
             return;
         }
 
         RegrowthTP.getInstance().getRequestManager().sendRequest(new TeleportRequest(from, to, TeleportDirection.TO));
 
-        target.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("received-teleport-request")
-            .replace("%player%", player.getName())));
-        player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("sent-request")
-            .replace("%player%", target.getName())));
+        PaperColor.handler().sendMessage(target, RegrowthTP.getInstance().getConfigManager().getMessage("received-teleport-request")
+            .replace("%player%", player.getName()));
+        PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("sent-request")
+            .replace("%player%", target.getName()));
     }
 
     @Command({"tp invite", "tpi"})
@@ -117,14 +117,14 @@ public class TPCommand {
     public void invite(BukkitCommandActor actor, Player target) {
         Player player = actor.requirePlayer();
         if (player == target) {
-            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("self-request")));
+            PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("self-request"));
             return;
         }
 
         TPUser targetUser = RegrowthTP.getInstance().getUserCache().getCachedUser(target.getUniqueId());
         if (targetUser != null && !targetUser.areRequestsEnabled()) {
-            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("requests-disabled")
-                .replace("%player%", target.getName())));
+            PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("requests-disabled")
+                .replace("%player%", target.getName()));
             return;
         }
 
@@ -132,17 +132,17 @@ public class TPCommand {
         UUID to = target.getUniqueId();
         TeleportRequest request = RegrowthTP.getInstance().getRequestManager().findRequest(from, to);
         if (request != null) {
-            player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("already-requested")
-                .replace("%player%", target.getName())));
+            PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("already-requested")
+                .replace("%player%", target.getName()));
             return;
         }
 
         RegrowthTP.getInstance().getRequestManager().sendRequest(new TeleportRequest(from, to, TeleportDirection.SUMMON));
 
-        target.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("received-summon-request")
-            .replace("%player%", player.getName())));
-        player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("sent-request")
-            .replace("%player%", target.getName())));
+        PaperColor.handler().sendMessage(target, RegrowthTP.getInstance().getConfigManager().getMessage("received-summon-request")
+            .replace("%player%", player.getName()));
+        PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("sent-request")
+            .replace("%player%", target.getName()));
     }
 
     @Command({"tp accept", "tpyes"})
@@ -159,10 +159,10 @@ public class TPCommand {
 
         if (request == null) {
             if (target == null) {
-                player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("no-requests")));
+                PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("no-requests"));
             } else {
-                player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("no-request")
-                    .replace("%player%", target.getName())));
+                PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("no-request")
+                    .replace("%player%", target.getName()));
             }
             return;
         }
@@ -189,10 +189,10 @@ public class TPCommand {
 
         if (request == null) {
             if (target == null) {
-                player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("no-requests")));
+                PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("no-requests"));
             } else {
-                player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("no-request")
-                    .replace("%player%", target.getName())));
+                PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("no-request")
+                    .replace("%player%", target.getName()));
             }
             return;
         }
@@ -202,9 +202,9 @@ public class TPCommand {
         }
 
         requestManager.removeRequest(request);
-        player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("denied-request")
-            .replace("%player%", target.getName())));
-        target.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("request-denied")
+        PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("denied-request")
+            .replace("%player%", target.getName()));
+        target.sendMessage(PaperColor.handler().translate(RegrowthTP.getInstance().getConfigManager().getMessage("request-denied")
             .replace("%player%", player.getName())));
     }
 
@@ -219,8 +219,8 @@ public class TPCommand {
 
         user.setRequestsEnabled(!user.areRequestsEnabled());
 
-        player.sendMessage(ModernChatColorHandler.translate(RegrowthTP.getInstance().getConfigManager().getMessage("toggle-requests")
-            .replace("%status%", user.areRequestsEnabled() ? "enabled" : "disabled")));
+        PaperColor.handler().sendMessage(player, RegrowthTP.getInstance().getConfigManager().getMessage("toggle-requests")
+            .replace("%status%", user.areRequestsEnabled() ? "enabled" : "disabled"));
     }
 
     @Subcommand("reload")

@@ -1,7 +1,7 @@
 package org.lushplugins.regrowthtp.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.lushplugins.lushlib.utils.YamlUtils;
+import org.lushplugins.lushlib.config.YamlUtils;
 import org.lushplugins.regrowthtp.RegrowthTP;
 
 import java.util.Map;
