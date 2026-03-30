@@ -1,7 +1,7 @@
 package org.lushplugins.regrowthtp;
 
 import org.jooq.impl.SQLDataType;
-import org.lushplugins.lushlib.plugin.SpigotPlugin;
+import org.lushplugins.lushlib.utils.plugin.SpigotPlugin;
 import org.lushplugins.regrowthtp.command.TPCommand;
 import org.lushplugins.regrowthtp.config.ConfigManager;
 import org.lushplugins.regrowthtp.listener.PlayerListener;

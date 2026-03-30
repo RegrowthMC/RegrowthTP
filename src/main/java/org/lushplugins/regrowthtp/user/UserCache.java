@@ -8,7 +8,7 @@ import org.lushplugins.regrowthtp.RegrowthTP;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public class UserCache extends org.lushplugins.lushlib.cache.UserCache<TPUser> {
+public class UserCache extends org.lushplugins.lushlib.utils.cache.UserCache<TPUser> {
 
     public UserCache(JavaPlugin plugin) {
         super(plugin);
